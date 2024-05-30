@@ -1,0 +1,80 @@
+package in.Ashokit.controller;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.web.bind.annotation.RestController;
+
+
+import in.Ashokit.Binding.Courses;
+import in.Ashokit.Binding.Student;
+import in.Ashokit.entity.Enrollment;
+import in.Ashokit.feign.Coursefeign;
+import in.Ashokit.feign.Studentclient;
+import in.Ashokit.service.EnrollmentService;
+
+
+@RestController
+public class EnrollmentController {
+
+	 @Autowired
+	   private EnrollmentService eservice;
+	 @Autowired
+	 private Coursefeign cclient;
+	 @Autowired
+	 private Studentclient sclient;
+	 
+	 @GetMapping("/getstudent/{id}")
+	 public ResponseEntity<Optional<Student>> getStudentById(@PathVariable Long id) {
+	     
+	     return sclient.getstudent(id);
+	 }
+	
+	
+	 @PostMapping("/enroll")
+	    public ResponseEntity<String> enrollStudentInCourse(@RequestBody Enrollment enrollment) {
+	        try {
+	 
+	 if(!sclient.existbyid(enrollment.getStudentid()).getBody()) {
+		 
+		 return new ResponseEntity<>("Student  not found ",HttpStatus.BAD_REQUEST);
+	 }
+	 if(!cclient.existbyid(enrollment.getCouseid()).getBody()) {
+		 
+		 return new ResponseEntity<>("Course not found",HttpStatus.BAD_REQUEST);
+	 }
+	 
+	      eservice.enrollment(enrollment)  ;
+	      return new ResponseEntity<>("saved",HttpStatus.OK);
+		}catch (Exception e) {
+            return ResponseEntity.status(500).body("An error occurred while enrolling the student in the course: " + e.getMessage());
+        }
+	 }
+	 @GetMapping("/students/{studentid}/courses")
+	    public List<Courses> getCoursesForStudent(@PathVariable Long studentid) {
+	        return eservice.getCoursesForStudent(studentid);
+	    }
+	 
+	 @GetMapping("/courses/{couseid}/student")
+	    public List<Student> getStudentForcourses(@PathVariable Long couseid) {
+	        return eservice.getStudentsForCourse(couseid);
+	    }
+	 
+	 @DeleteMapping("/delete/{id}")
+	    public void deleteStudentFromCourse(@PathVariable Long studentid) {
+	        eservice.deletecoursesfromstudent(studentid);
+	    }
+	}
+	
+	
+

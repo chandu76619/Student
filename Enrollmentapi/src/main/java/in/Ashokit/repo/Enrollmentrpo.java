@@ -15,4 +15,10 @@ public interface Enrollmentrpo extends JpaRepository<Enrollment, Long>{
 	
 	
 	 List<Enrollment> findByCouseid(Long couseid);
+	 
+	 
+	public boolean existsByStudentid(Long studentid);
+	
+	
+	
 }
