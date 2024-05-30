@@ -1,0 +1,5 @@
+package in.Ashokit.entity;
+
+public class Enrollment {
+
+}

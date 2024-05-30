@@ -1,0 +1,13 @@
+package in.Ashokit.feignclient;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import in.Ashokit.Binding.Product;
+
+@FeignClient(name="PRODUCT")
+public interface Productapiclient {
+
+	@PostMapping("/saveproducts")
+	public boolean saveproduct( Product product);
+}

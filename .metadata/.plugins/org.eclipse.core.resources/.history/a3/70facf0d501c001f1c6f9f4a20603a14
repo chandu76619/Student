@@ -1,0 +1,24 @@
+package in.Ashokit.service;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.Ashokit.entity.Enrollment;
+import in.Ashokit.repo.Enrollmentrpo;
+
+
+@Service
+public class EnrollmentService {
+	
+	@Autowired
+	private Enrollmentrpo erepo;
+	
+	public void enrollment(Long sid,Long id) {
+		
+		Enrollment e=new Enrollment();
+		e.setStudentid(sid);
+		e.setCouseid(id);
+		 erepo.save(e);
+	}
+}

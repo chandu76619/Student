@@ -1,0 +1,29 @@
+package in.Ashokit.service;
+
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import in.Ashokit.Binding.Product;
+import reactor.core.publisher.Mono;
+@Service
+public class ProductService {
+
+public Mono<List<Product>> getProductNew(){
+		
+		String apiUrl = "http://localhost:8081/getall";
+		
+		WebClient webclient = WebClient.create();
+		
+		 return webclient.get()
+                 .uri(apiUrl)
+                 .retrieve()
+                 .bodyToMono(new ParameterizedTypeReference<List<Product>>() {});
+		
+	}
+
+
+
+}

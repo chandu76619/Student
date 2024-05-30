@@ -18,6 +18,7 @@ public interface Coursefeign {
 
 	@PostMapping("/save")
 	ResponseEntity<String> savecourses(@RequestBody  Courses c);
+	
 	@GetMapping("/getby/{id}")
 	public ResponseEntity<Optional<Courses>> getbyid(@PathVariable Long id);
 	

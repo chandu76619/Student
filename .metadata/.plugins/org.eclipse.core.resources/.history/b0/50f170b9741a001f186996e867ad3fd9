@@ -1,0 +1,48 @@
+package in.Ashokit.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.Ashokit.entity.Courses;
+import in.Ashokit.repo.Courserepo;
+@Service
+public class ICourseService implements CourseService{
+@Autowired
+	private Courserepo repo;
+	@Override
+	public boolean savecourse(Courses c) {
+		
+Courses courses = repo.save(c);
+		return courses!=null;
+	}
+
+	@Override
+	public List<Courses> getcourses() {
+		
+		
+		return repo.findAll();
+	}
+
+	@Override
+	public Optional<Courses> getbyid(Long id) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public void deletebyid(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Courses update(Long id, Courses c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

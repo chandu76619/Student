@@ -1,5 +1,6 @@
 package in.Ashokit.controller;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,11 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
-import feign.FeignException;
+
 import in.Ashokit.Binding.Courses;
 import in.Ashokit.Binding.Student;
 import in.Ashokit.entity.Enrollment;
@@ -39,23 +39,7 @@ public class EnrollmentController {
 	     return sclient.getstudent(id);
 	 }
 	
-	 /*
-	 @PostMapping("/enroll")
-	    public ResponseEntity<String> enrollStudentInCourse(@RequestBody Enrollment enrollment) {
-	        try {
-	           if(sclient.existbyid(enrollment.getStudentid())!=null) {
-	        	   return new ResponseEntity<>("Student not Found",HttpStatus.BAD_REQUEST);
-	           }
-
-	           if(cclient.existbyid(enrollment.getCouseid())!=null) {
-	        	   return new ResponseEntity<>("Course  not Found",HttpStatus.BAD_REQUEST);
-	           }
-	            eservice.enrollment(enrollment);
-	            return new ResponseEntity<>("Student enrolled in course successfully",HttpStatus.OK);
-	        } catch (Exception e) {
-	            return ResponseEntity.status(500).body("An error occurred while enrolling the student in the course: " + e.getMessage());
-	        }
-	    }*/
+	
 	 @PostMapping("/enroll")
 	    public ResponseEntity<String> enrollStudentInCourse(@RequestBody Enrollment enrollment) {
 	        try {
@@ -75,8 +59,17 @@ public class EnrollmentController {
             return ResponseEntity.status(500).body("An error occurred while enrolling the student in the course: " + e.getMessage());
         }
 	 }
-	
-	
-	
+	 @GetMapping("/students/{studentid}/courses")
+	    public List<Courses> getCoursesForStudent(@PathVariable Long studentid) {
+	        return eservice.getCoursesForStudent(studentid);
+	    }
+	 
+	 @GetMapping("/courses/{couseid}/student")
+	    public List<Student> getStudentForcourses(@PathVariable Long couseid) {
+	        return eservice.getStudentsForCourse(couseid);
+	    }
+	 
+	 
 	}
+	
 

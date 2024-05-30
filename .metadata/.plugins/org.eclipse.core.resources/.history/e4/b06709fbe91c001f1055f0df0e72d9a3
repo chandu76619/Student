@@ -1,0 +1,39 @@
+package in.Ashokit.service;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+
+import in.Ashokit.entity.Enrollment;
+import in.Ashokit.repo.Enrollmentrpo;
+
+
+@Service
+public class EnrollmentService {
+	
+	@Autowired
+	private Enrollmentrpo erepo;
+	
+	public void enrollment(Enrollment enrollment) {
+		
+		erepo.save(enrollment);
+	}
+	
+	
+	public List<Enrollment> getbyid(Long studentid,Long couseid){
+		
+		List<Enrollment> byStudentidAndCouseid = erepo.findByStudentidAndCouseid(studentid, couseid);
+		return byStudentidAndCouseid;	
+
+	}
+	
+	public Optional<Enrollment> getbyid(Long id){
+		
+		return erepo.findById(id);
+	}
+}

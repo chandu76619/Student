@@ -1,0 +1,17 @@
+package in.Ashokit.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.base.Optional;
+
+import in.Ashokit.entity.Student;
+import in.Ashokit.repo.Studentrepo;
+
+public class IStudentService implements StudentService{
+
+	@Autowired
+	private Studentrepo srepo;
+	
+}

@@ -1,0 +1,38 @@
+package in.Ashokit.rest;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.Ashokit.entity.Student;
+import in.Ashokit.service.StudentService;
+
+@RestController
+public class StudentRest {
+@Autowired
+	private StudentService sservice;
+	
+@PostMapping("/saved")
+	public ResponseEntity<String>  savestudents(Student s){
+		
+		boolean savestudents = sservice.savestudents(s);
+		if(savestudents)
+		
+		return new ResponseEntity<>("Data saved Sucessfully",HttpStatus.CREATED);
+		else
+			
+			return new ResponseEntity<>("Data failed to save",HttpStatus.BAD_REQUEST);
+	}
+	
+	public ResponseEntity<Optional<Student>> getstudent(@PathVariable Long id){
+		
+		Optional<Student> optional = sservice.getById(id);
+		
+		return new ResponseEntity<>(optional,HttpStatus.BAD_REQUEST);
+	}
+}

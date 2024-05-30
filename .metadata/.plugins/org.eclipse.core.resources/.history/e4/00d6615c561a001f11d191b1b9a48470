@@ -1,0 +1,50 @@
+package in.Ashokit.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.base.Optional;
+
+import in.Ashokit.entity.Student;
+import in.Ashokit.repo.Studentrepo;
+
+public class IStudentService implements StudentService{
+
+	@Autowired
+	private Studentrepo srepo;
+	@Override
+	public boolean savestudents(Student s) {
+		Student student = srepo.save(s);
+		return student!=null;
+	}
+
+	@Override
+	public List<Student> getall() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Student> getbyid(Long id) {
+		
+Object optional = srepo.findById(id);
+		
+	return null;
+		
+		
+	}
+
+	@Override
+	public Optional<Student> update(Long id, Student s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Student> deletebyid(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

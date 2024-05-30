@@ -1,0 +1,28 @@
+package in.Ashokit.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.Ashokit.entity.Student;
+import in.Ashokit.service.StudentService;
+
+@RestController
+public class StudentRest {
+@Autowired
+	private StudentService sservice;
+	
+	public ResponseEntity<String>  savestudents(Student s){
+		
+		boolean savestudents = sservice.savestudents(s);
+		if(savestudents)
+		
+		return new ResponseEntity<>("Data saved Sucessfully",HttpStatus.CREATED);
+		else
+			
+			return new ResponseEntity<>("Data failed to save",HttpStatus.BAD_REQUEST);
+	}
+	
+	
+}

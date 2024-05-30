@@ -1,0 +1,16 @@
+package in.Ashokit.repo;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.Ashokit.entity.Enrollment;
+
+public interface Enrollmentrpo extends JpaRepository<Enrollment, Long>{
+
+	
+	public List<Enrollment> findByStudentidAndCouseid(Long studentid,Long couseid);
+	
+	public  Optional<Enrollment> findByStudentid(Long studentid);
+}

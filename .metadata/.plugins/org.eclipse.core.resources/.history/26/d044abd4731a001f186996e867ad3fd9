@@ -1,0 +1,13 @@
+package in.Ashokit.service;
+
+import java.util.List;
+
+import in.Ashokit.entity.Courses;
+
+public interface CourseService {
+
+	public boolean savecourse(Courses c);
+	public List<Courses> getcourses();
+	
+	
+}

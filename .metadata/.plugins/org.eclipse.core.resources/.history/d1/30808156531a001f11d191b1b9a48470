@@ -1,0 +1,5 @@
+package in.Ashokit.repo;
+
+public interface Studentrepo {
+
+}

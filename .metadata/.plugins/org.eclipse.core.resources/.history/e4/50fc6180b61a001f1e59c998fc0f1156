@@ -1,0 +1,9 @@
+package in.Ashokit;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.Ashokit.entity.Enrollment;
+
+public interface Enrollmentrepo extends JpaRepository<Enrollment, Long> {
+
+}

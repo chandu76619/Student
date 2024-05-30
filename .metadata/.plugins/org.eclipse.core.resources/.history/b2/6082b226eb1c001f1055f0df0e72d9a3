@@ -1,0 +1,49 @@
+package in.Ashokit.service;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import in.Ashokit.Binding.Courses;
+import in.Ashokit.Binding.Student;
+import in.Ashokit.entity.Enrollment;
+import in.Ashokit.feign.Coursefeign;
+import in.Ashokit.feign.Studentclient;
+import in.Ashokit.repo.Enrollmentrpo;
+
+
+@Service
+public class EnrollmentService {
+	
+	@Autowired
+	private Enrollmentrpo erepo;
+	
+	public void enrollment(Enrollment enrollment) {
+		
+		erepo.save(enrollment);
+	}
+	
+	
+	public List<Enrollment> getbyid(Long studentid,Long couseid){
+		
+		List<Enrollment> byStudentidAndCouseid = erepo.findByStudentidAndCouseid(studentid, couseid);
+		return byStudentidAndCouseid;	
+
+	}
+	
+	public List<Courses> getCoursesForStudent(Long studentid, Studentclient studentclient, Coursefeign courseFeignClient) {
+        // Fetch student using the Feign client
+        ResponseEntity<Optional<Student>> studentResponse = studentclient.getstudent(studentid);
+        if (studentResponse.getBody().isEmpty()) {
+            throw new RuntimeException("Student not found");
+        }
+
+        List<Enrollment> enrollments = erepo.findByStudentid(studentid);
+        
+    }
+}
+}

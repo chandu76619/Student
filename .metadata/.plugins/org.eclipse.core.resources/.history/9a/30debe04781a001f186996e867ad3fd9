@@ -1,0 +1,9 @@
+package in.Ashokit.feign;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name="Courses")
+public class Coursefeign {
+
+	
+}

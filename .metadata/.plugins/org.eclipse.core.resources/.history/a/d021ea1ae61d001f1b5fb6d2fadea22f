@@ -1,0 +1,103 @@
+package in.Ashokit.service;
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import in.Ashokit.Binding.Courses;
+import in.Ashokit.Binding.Student;
+import in.Ashokit.entity.Enrollment;
+import in.Ashokit.feign.Coursefeign;
+import in.Ashokit.feign.Studentclient;
+import in.Ashokit.repo.Enrollmentrpo;
+import java.util.stream.Collectors;
+
+@Service
+public class EnrollmentService {
+	
+	@Autowired
+	private Enrollmentrpo erepo;
+	@Autowired
+	private Coursefeign cclient;
+	@Autowired
+	private Studentclient sclient;
+	
+	
+
+
+
+	public void enrollment(Enrollment enrollment) {
+		
+		erepo.save(enrollment);
+	}
+	
+	 
+	 
+	 public ResponseEntity<Optional<Courses>> getCourseById(Long couseid) {
+		    return cclient.getbyid(couseid);
+		}
+	 public ResponseEntity<Optional<Student>> getstudentid(Long studentid) {
+		    return sclient.getstudent(studentid);
+		}
+	 
+	 
+	 public Optional<Enrollment> getbyid(Long id){
+		 
+		 
+		return erepo.findById(id);
+	 }
+	 public List<Courses> getCoursesForStudent(Long studentid) {
+	        List<Enrollment> enrollments = erepo.findByStudentid(studentid);
+/*
+	        return enrollments.stream()
+	                .map(enrollment -> cclient.getbyid(enrollment.getCouseid()).getBody().orElse(null))
+	                .filter(Objects::nonNull)
+	                .collect(Collectors.toList());
+	        */
+	       
+	        List<Courses> courses =new ArrayList<>();
+	        for(Enrollment enrollment:enrollments) {
+	        	 Optional<Courses> optional = cclient.getbyid(enrollment.getCouseid()).getBody();
+	        	if(optional.isPresent()) {
+	        		courses.add(optional.get());
+	        		
+	        	}
+	        }
+	        return courses;
+	       
+	 }
+	 
+	 
+	 public List<Student> getstudentsforcourses(Long couseid){
+		 
+		 
+		 List<Enrollment> couseid2 = erepo.findByCouseid(couseid);
+		 
+		/* return couseid2.stream()
+				 .map(enrollment -> sclient.getstudent(enrollment.getStudentid()).getBody().orElse(null))
+				 .filter(Objects::nonNull)
+	                .collect(Collectors.toList());
+		 */
+		 List<Student> result = new ArrayList<>();
+		 for (Enrollment enrollment : couseid2) {
+		     Optional<Student> optionalStudent = sclient.getstudent(enrollment.getStudentid()).getBody();
+		     if (optionalStudent.isPresent()) {
+		         result.add(optionalStudent.get());
+		     }
+		 }
+		 return result;
+	 }
+	}
+	
+
+
+	
+
+

@@ -33,19 +33,19 @@ public class StudentRest {
 			
 			return new ResponseEntity<>("Data failed to save",HttpStatus.BAD_REQUEST);
 	}
-	@GetMapping("/getstudent/{id}")
-	public ResponseEntity<Optional<Student>> getstudent(@PathVariable Long id){
+	@GetMapping("/getstudent/{sid}")
+	public ResponseEntity<Optional<Student>> getstudent(@PathVariable Long sid){
 		
-		Optional<Student> optional = sservice.getById(id);
+		Optional<Student> optional = sservice.getById(sid);
 		
-		return new ResponseEntity<>(optional,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(optional,HttpStatus.OK);
 	}
 	
 	@GetMapping("/getallstudents")
 	public ResponseEntity<List<Student>> getallstudents(){
+		List<Student> getall = sservice.getall();
 		
-		
-		return new ResponseEntity<>(sservice.getall(),HttpStatus.OK);
+		return new ResponseEntity<>(getall,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("delete/{id}")

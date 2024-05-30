@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: ConfigServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/chandu76619/chandu.git
+          clone-on-start: true
+management:
+  security:
+    enabled: false

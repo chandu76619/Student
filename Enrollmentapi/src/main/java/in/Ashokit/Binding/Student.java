@@ -2,13 +2,14 @@ package in.Ashokit.Binding;
 
 
 
-
 public class Student {
 	 
 	private Long sid;
 	private String name;
 	private String email;
 	private Long phno;
+	
+	
 	public Long getSid() {
 		return sid;
 	}

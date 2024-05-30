@@ -1,0 +1,29 @@
+package in.Ashokit.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.Ashokit.entity.Courses;
+import in.Ashokit.service.CourseService;
+
+@RestController
+public class CourseController {
+
+	@Autowired
+	private CourseService service;
+	
+	
+	ResponseEntity<String> savecourses(Courses c){
+		
+		boolean savecourse = service.savecourse(c);
+		if(savecourse) {
+			return new ResponseEntity<>("saved ",HttpStatus.CREATED);
+		}else {
+			
+			return new ResponseEntity<>("failed",HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+}
